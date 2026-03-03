@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个性化学习Agent - 注册</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h1>个性化学习Agent</h1>
+            <h2>用户注册</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required placeholder="请输入用户名（3-50位）">
+                </div>
+                <div class="form-group">
+                    <label for="fullName">真实姓名</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="请输入真实姓名">
+                </div>
+                <div class="form-group">
+                    <label for="grade">年级/角色</label>
+                    <select id="grade" name="grade" required>
+                        <option value="">请选择</option>
+                        <option value="初中">初中</option>
+                        <option value="高中">高中</option>
+                        <option value="admin">管理员（仅内部使用）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱（可选）</label>
+                    <input type="email" id="email" name="email" placeholder="请输入邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required placeholder="请输入密码（6-72位）">
+                </div>
+                <button type="submit" class="btn primary-btn">注册</button>
+            </form>
+            <div class="register-link">
+                已有账号？<a href="index.html">立即登录</a>
+            </div>
+            <div id="message" class="message"></div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        // 注册逻辑
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = {
+                username: document.getElementById('username').value,
+                full_name: document.getElementById('fullName').value,
+                grade: document.getElementById('grade').value,
+                email: document.getElementById('email').value || "",
+                password: document.getElementById('password').value
+            };
+
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = "";
+            messageEl.className = "message";
+
+            try {
+                // 调用注册API
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.detail || "注册失败");
+                }
+
+                // 注册成功
+                messageEl.className = "message success";
+                messageEl.textContent = "注册成功！即将跳转到登录页面...";
+
+                // 3秒后跳转到登录页
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 3000);
+
+            } catch (error) {
+                // 注册失败
+                messageEl.className = "message error";
+                messageEl.textContent = `错误：${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

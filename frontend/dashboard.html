@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习控制台 - 个性化学习Agent</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-left">
+            <h1>个性化学习Agent</h1>
+        </div>
+        <div class="header-right">
+            <span id="userInfo"></span>
+            <button id="logoutBtn" class="btn secondary-btn">退出登录</button>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- 图片上传区域 -->
+        <div class="card">
+            <h2>上传作业/试卷图片</h2>
+            <div class="upload-area">
+                <input type="file" id="fileInput" accept="image/jpg,image/jpeg,image/png" hidden>
+                <button id="selectFileBtn" class="btn primary-btn">选择图片</button>
+                <span id="fileName"></span>
+                <button id="uploadBtn" class="btn success-btn" disabled>上传并分析</button>
+            </div>
+            <div id="uploadMessage" class="message"></div>
+        </div>
+
+        <!-- 分析结果区域 -->
+        <div class="card">
+            <h2>分析结果</h2>
+            <div id="analysisResult" class="result-area">
+                暂无分析结果，请先上传图片
+            </div>
+        </div>
+
+        <!-- 薄弱点记忆区域 -->
+        <div class="card">
+            <h2>我的薄弱点</h2>
+            <div id="memoryResult" class="result-area">
+                加载中...
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
