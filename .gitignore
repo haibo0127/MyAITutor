@@ -41,3 +41,9 @@ data/uploads/
 *.swp
 *.swo
 .DS_Store
+
+.ssh/*.pem
+*.pem
+!requirements.txt
+!Dockerfile
+!.env.example
