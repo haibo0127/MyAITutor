@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.routers import auth, study
+# 1. 导入离线文档插件
+from fastapi_offline_docs import add_offline_docs
 
 def create_app() -> FastAPI:
     """创建并配置FastAPI应用"""
@@ -10,6 +12,10 @@ def create_app() -> FastAPI:
         description="为初高中学生定制的AI学习助手",
         version="1.0.0"
     )
+
+    # 2. 启用离线文档支持 (关键步骤)
+    # 这会将 Swagger UI 的资源打包在本地，不再依赖外部 CDN
+    add_offline_docs(app)
 
     # 配置CORS
     app.add_middleware(
